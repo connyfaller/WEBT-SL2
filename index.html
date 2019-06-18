@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!-- Autor: Cornelia Faller, Datum:15.06.2019, Version: 1.0 -->
+<html>
+	<head>
+		<!-- Metainformationen zur Seite -->
+		<meta charset="UTF-8"/> <!-- HTML Dokument wurde mit UTF-8 Encoding gespeichert... -->
+		<!-- Titel/Bezeichnung des Dokuments -->
+		<title>Studierendenzahl der Uni Bamberg</title>
+		<!-- Bezug auf zugehöriges Stylesheet -->
+		<link rel="stylesheet" href="css/style_studZahlUniBamberg.css"/>
+		<script type="text/javascript" src="jQuery_d3_js/jquery-3.4.1.js"></script>
+		<script type="text/javascript" src="jQuery_d3_js/d3.js"></script>
+		<script type="text/javascript" src="jQuery_d3_js/skript_StudiVisu.js"></script>
+		
+	</head>
+
+	<body>
+		<!-- Eigentlicher Inhalt... -->
+		<header>
+			<!-- Schriftzug... -->
+			<h1>Studierendenzahl der Uni Bamberg</h1>
+		</header>
+		<div class="seiteninhalt">
+			<!-- eigentlicher Seiteninhalt... -->
+			<!-- Holen der allgemeinen Informationen... -->
+			
+			<div class="linkerBereich">
+				<!-- <div id="yAchse">
+					Studierendenzahlen
+				</div> -->
+				<img id="barChart"><svg class="barChart"></svg></img>
+				
+				<!-- <div id="xAchse">
+					<p>Semester</p>
+				</div> -->
+				<script type="text/javascript">
+				      var data = [10000, 12000, 11111, 9000, 9898, 11000];
+				    
+				      var barWidth = 30;
+				      var heightOfbars = 300;
+				      var heightOftext = 20;
+				      var barHeight = heightOfbars + heightOftext;
+				    
+				      var x = d3.scaleLinear()
+				      .domain([0, d3.max(data)])
+				      .range([0, heightOfbars]);     
+				    
+				      var chart = d3.select(".barChart")
+				        .attr("width", barWidth * data.length)
+				        .attr("height", barHeight);   
+				   
+				      var bar = chart.selectAll("g")
+				        .data(data)
+				        .enter().append("g")
+				        .attr("transform", function(d, i) { 
+				            return "translate(" + (i*barWidth+2) + ", " + (barHeight-x(d)) + ")"; 
+				        });
+
+				      bar.append("rect")
+				        .attr("height", function(d) { return x(d); })
+				        .attr("width", barWidth - 4 )
+				        .on("click", function(){
+						    d3.select(this).style("fill", "var(--color-two)");  
+						    })
+				        .on("click", function(){
+						    d3.select(this).style("fill", "var(--color-three)");  
+						    })
+				        ;
+
+				      bar.append("text")
+				        .attr("x", +5)
+				        .attr("y", -9)
+				        .attr("transform", "rotate(90 0,0)")
+				        .text(function(d) { return d; });
+				        
+				</script>
+			</div>
+
+			<div class="rechterBereich">
+				<div id="auswahlBalken">
+					<p> Bitte wählen Sie einen Balken aus!</p>
+				</div>
+				<div id="pie"><svg class="pieChart" width="150" height="150"> </svg></div>
+				<div id="table"><table> 
+					<tr> 
+						<th>Berlin</th>
+						<th>Hamburg</th> 
+						<th>München</th> 
+					</tr> 
+					<tr> 
+						<td>Miljöh</td> 
+						<td>Kiez</td> 
+						<td>Bierdampf</td> 
+					</tr>
+				</table></div>
+			</div>
+			<div id="loader">
+				<p>Die Seite wird geladen...</p>
+				<img class="loader" src="img/loader.gif" alt="Die Seite wird geladen..." />
+			</div>
+		</div>
+
+		<script>
+				    var inData = [3810, 3740, 2054, 677, 107];
+
+				    var svg = d3.select("svg.pieChart"),
+				        width = svg.attr("width"),
+				        height = svg.attr("height"),
+				        radius = Math.min(width, height) / 2,
+				        g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+				    var color = d3.scaleOrdinal([('#014358'),'#1f8a71','#bdd63b','#ffe00b','#f27421']);
+
+				    // Generate the pie
+				    var pie = d3.pie();
+
+				    // Generate the arcs
+				    var arc = d3.arc()
+				                .innerRadius(50)
+				                .outerRadius(radius);
+
+				    //Generate groups
+				   g.selectAll("arc")
+				                .data(pie(inData))
+				                .enter()
+				                .append("g")
+				                .attr("class", "arc")
+				                .append("path")
+				                .attr("fill", function(d, i) {
+						            return color(i);
+						        })
+						        .attr("d", arc);
+					g.append("text")
+						   .text("Hello")
+						   .attr("text-anchor", "middle")
+						   ;
+				
+				   
+		</script> 
+
+	</body>
+</html>
